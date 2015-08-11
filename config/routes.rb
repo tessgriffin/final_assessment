@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   root to: "lists#index"
-  resources :lists
+  resources :lists do 
+    resources :tasks, except: :destroy
+  end
 end

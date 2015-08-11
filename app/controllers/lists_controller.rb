@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   def index
-    @lists = List.all
+    @lists = List.includes(:tasks).all
   end
 
   def new
@@ -11,7 +11,7 @@ class ListsController < ApplicationController
     @list = List.new(list_params)
     if @list.save
       flash[:success] = "#{@list.title} created"
-      redirect_to lists_path
+      redirect_to root_path
     else
       flash.now[:error] = @list.errors.full_messages.join(", ")
       render :new

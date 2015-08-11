@@ -1,0 +1,13 @@
+<h1>Edit Task</h1>
+
+<%= form_for @task, url: list_task_path(params[:list_id], @task.id) do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :notes %>
+  <%= f.text_area :notes %>
+  <%= f.label :start_date %>
+  <%= f.date_field :start_date %>
+  <%= f.label :due_date %>
+  <%= f.date_field :due_date %>
+  <%= f.submit %>
+<% end %>
