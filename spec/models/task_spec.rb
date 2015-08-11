@@ -30,4 +30,16 @@ RSpec.describe Task, type: :model do
   it "can belong to a list" do 
     expect(task.list.title).to eq("Daily Tasks")
   end
+
+  it "cannot set a start date before today" do 
+    task.start_date = Date.yesterday
+
+    expect(task).not_to be_valid
+  end
+
+  it "cannot set a due date before today" do 
+    task.due_date = Date.yesterday
+
+    expect(task).not_to be_valid
+  end
 end

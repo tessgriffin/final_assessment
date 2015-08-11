@@ -1,17 +1,11 @@
 <h1>Welcome to Task Manager</h1>
 
-<%= link_to "New List", new_list_path %>
-
 <% @lists.each do |list| %>
-  <h3><%= list.title %></h3>
+  <h3><%= link_to list.title, list_path(list) %></h3>
   <p><%= list.description %></p>
   <%= link_to "Edit List", edit_list_path(list.id) %>
   <%= link_to "Delete List", list_path(list.id), method: :delete %>
-  <%= link_to "New Task", new_list_task_path(list.id) %>
-  <h4>Tasks</h4>
-  <ul>
-  <% list.tasks.each do |task| %>
-    <li><h5><%= task.title %></h5><%= link_to "Edit", edit_list_task_path(list.id, task.id) %></li>
-  <% end %>
-  </ul>
 <% end %>
+
+
+<h2><%= link_to "New List", new_list_path %></h2>

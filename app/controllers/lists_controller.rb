@@ -1,6 +1,10 @@
 class ListsController < ApplicationController
   def index
-    @lists = List.includes(:tasks).all
+    @lists = List.all
+  end
+
+  def show
+    @list = List.includes(:tasks).find(params[:id])
   end
 
   def new
