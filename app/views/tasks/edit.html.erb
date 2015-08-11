@@ -9,5 +9,11 @@
   <%= f.date_field :start_date %>
   <%= f.label :due_date %>
   <%= f.date_field :due_date %>
+  <%= f.label(:complete, "True")%>
+  <%= f.radio_button(:complete, true) %>
+  <%= f.label(:complete, "False")%>
+  <%= f.radio_button(:complete, false) %>
   <%= f.submit %>
 <% end %>
+
+<%= link_to "Back to List", list_path(params[:list_id]) %>

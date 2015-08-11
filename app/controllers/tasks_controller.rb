@@ -8,7 +8,7 @@ class TasksController < ApplicationController
     @task.list_id = params[:list_id]
     if @task.save
       flash[:success] = "#{@task.title} created"
-      redirect_to root_path
+      redirect_to list_path(params[:list_id])
     else
       flash.now[:error] = @task.errors.full_messages.join(", ")
       render :new
@@ -23,7 +23,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.update(task_params)
       flash[:success] = "#{@task.title} updated"
-      redirect_to root_path
+      redirect_to list_path(params[:list_id])
     else
       flash[:errors] = @task.errors.full_messages.join(", ")
       render :edit
@@ -32,6 +32,6 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :notes, :start_date, :due_date)
+    params.require(:task).permit(:title, :notes, :start_date, :due_date, :complete)
   end
 end
