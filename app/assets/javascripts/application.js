@@ -13,3 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(document).ready(function(){
+  $("#completed").change(function(){
+    $(".complete-tasks").toggleClass("hidden");
+  });
+  $("#future").change(function(){
+    $(".future-tasks").toggleClass("hidden");
+  });
+});
