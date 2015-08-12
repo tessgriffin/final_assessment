@@ -1,54 +1,51 @@
 <h1><%= @list.title %></h1>
 
 <h2>Tasks</h2>
-<ul>
+Filter title: <input type="text" id="title-search"><br>
+Filter Start Date: <input type="text" id="start-date-search"><br>
+Filter Due Date: <input type="text" id="due-date-search"><br>
+Sort By:<br>
+<input type="radio" name="sort" value="title" id="title">Title<br>
+<input type="radio" name="sort" value="due-date" id="due-date">Due Date
+<ul id="all-tasks">
   <% @list.tasks.default.each do |task| %>
-    <li><h5><%= task.title %></h5>
+    <li class="task" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
       <p>
-      Start Date: <%= task.start_date %>
+      Start Date: <%= task.start_date.to_formatted_s(:long) %>
       <br>
-      Due Date: <%= task.due_date %>
+      Due Date: <%= task.due_date.to_formatted_s(:long) %>
       </p>
       <p>Mark as Complete?</p>
       <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
     </li>
   <% end %>
-</ul>
-
-<h4>Hidden Tasks:</h4>
-Completed: <input type="checkbox" value="completed" id="completed">
-Future: <input type="checkbox" value="future" id="future">
-<div class="complete-tasks hidden">
+  <h4>Hidden Tasks:</h4>
+  Completed: <input type="checkbox" value="completed" id="completed">
+  Future: <input type="checkbox" value="future" id="future">
   <h5>Completed Tasks</h5>
-  <ul>
-    <% @list.tasks.completed.each do |task| %>
-      <li><h5><%= task.title %></h5>
-        <p>
-        Start Date: <%= task.start_date %>
-        <br>
-        Due Date: <%= task.due_date %>
-        </p>
-        <p>Mark as incomplete?</p>
-        <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-<div class="future-tasks hidden">
+  <% @list.tasks.completed.each do |task| %>
+    <li class="task complete-tasks hidden" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
+      <p>
+      Start Date: <%= task.start_date.to_formatted_s(:long) %>
+      <br>
+      Due Date: <%= task.due_date.to_formatted_s(:long) %>
+      </p>
+      <p>Mark as incomplete?</p>
+      <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
+    </li>
+  <% end %>
   <h5>Future Tasks</h5>
-  <ul>
-    <% @list.tasks.future.each do |task| %>
-      <li><h5><%= task.title %></h5>
-        <p>
-        Start Date: <%= task.start_date %>
-        <br>
-        Due Date: <%= task.due_date %>
-        </p>
-        <p>Mark as complete?</p>
-        <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+  <% @list.tasks.future.each do |task| %>
+    <li class="task future-tasks hidden" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
+      <p>
+      Start Date: <%= task.start_date.to_formatted_s(:long) %>
+      <br>
+      Due Date: <%= task.due_date.to_formatted_s(:long) %>
+      </p>
+      <p>Mark as complete?</p>
+      <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
+    </li>
+  <% end %>
+</ul>
 <%= link_to "New Task", new_list_task_path(@list) %>
 <%= link_to "Back to All Lists", root_path %>
