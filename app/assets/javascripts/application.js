@@ -15,24 +15,76 @@
 //= require_tree .
 
 $(document).ready(function(){
-  $("#completed").change(function(){
+  $(".toggle-status").on("click", function(){
+    var id = $(this).data('id');
+    $.ajax({
+      url: "/task/" + id + "/update",
+      type: "put"
+    });
+  });
+
+  $(".delete-image").on("click", function(){
+    var id = $(this).data('id');
+    $.ajax({
+      url: "/task/" + id + "/delete_image",
+      type: "put"
+    });
+  });
+  $("#completed").on("click", function(){
     $(".complete-tasks").toggleClass("hidden");
   });
-  $("#future").change(function(){
+  $("#future").on("click", function(){
     $(".future-tasks").toggleClass("hidden");
   });
 
-  $("input[name='sort']").change(function(){
-    var input = $(this).val();
-    if(input === 'due-date'){
-      console.log("I'm the due date")
-    }else if(input === 'title'){
-      console.log($('.task').not('.hidden').first().data('title'))
+  $("#title-sort").on("click", function(){
+    var list = $("#all-tasks");
+    var elements = $(".task").not(".hidden");
+    $(elements).each(function(){
+        $(this).remove();
+      });
+    var ordered = elements.sort(sortTitles);
+    $(ordered).each(function(){
+      $(list).append($(this))
+    })
+  })
+
+  $("#due-date-sort").on("click", function(){
+    var list = $("#all-tasks");
+    var elements = $(".task").not(".hidden");
+    $(elements).each(function(){
+        $(this).remove();
+      });
+    var ordered = elements.sort(sortDueDate);
+    $(ordered).each(function(){
+      $(list).append($(this))
+    })
+  })
+
+  function sortTitles(a, b){
+    if($($(a)[0]).data('title') > $($(b)[0]).data('title')){
+      return 1;
     }
-  });
+    if($($(a)[0]).data('title') < $($(b)[0]).data('title')){
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  function sortDueDate(a, b){
+    if($($(a)[0]).data('due') > $($(b)[0]).data('due')){
+      return 1;
+    }
+    if($($(a)[0]).data('due') < $($(b)[0]).data('due')){
+      return -1;
+    } else {
+      return 0;
+    }
+  }  
 
   $('#title-search').on('keyup', function() {
-    var searchTitle = this.value;
+    var searchTitle = this.value.toLowerCase();
 
     $(".task").not(".hidden").each(function (index, task){
       $task = $(task);
@@ -69,4 +121,5 @@ $(document).ready(function(){
       }
     });
   });
+
 });
