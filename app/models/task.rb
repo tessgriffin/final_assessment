@@ -4,6 +4,9 @@ class Task < ActiveRecord::Base
   validates :title, presence: true
   validate :start_date_cannot_be_in_the_past, :due_date_cannot_be_in_the_past
 
+  has_attached_file :image, :styles => { :medium => "300x300>" }, :default_url => "hedgehog.jpg"
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
   def self.default
     where(["start_date <= ? and complete = ?", Date.today, false])
   end

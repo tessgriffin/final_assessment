@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  respond_to :json
+
   def new
     @task = Task.new
   end
@@ -30,8 +32,21 @@ class TasksController < ApplicationController
     end 
   end
 
+  def toggle_status
+    @task = Task.find(params[:id])
+    @task.update_attributes(complete: !@task.complete)
+    respond_with @task, location: ""
+  end
+
+  def delete_image
+    @task = Task.find(params[:id])
+    @task.image = nil
+    @task.save!
+    respond_with @task
+  end
+
   private
   def task_params
-    params.require(:task).permit(:title, :notes, :start_date, :due_date, :complete)
+    params.require(:task).permit(:title, :notes, :start_date, :due_date, :complete, :image)
   end
 end

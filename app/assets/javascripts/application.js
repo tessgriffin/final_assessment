@@ -15,6 +15,21 @@
 //= require_tree .
 
 $(document).ready(function(){
+  $(".toggle-status").on("click", function(){
+    var id = $(this).data('id');
+    $.ajax({
+      url: "/task/" + id + "/update",
+      type: "put"
+    });
+  });
+
+  $(".delete-image").on("click", function(){
+    var id = $(this).data('id');
+    $.ajax({
+      url: "/task/" + id + "/delete_image",
+      type: "put"
+    });
+  });
   $("#completed").change(function(){
     $(".complete-tasks").toggleClass("hidden");
   });

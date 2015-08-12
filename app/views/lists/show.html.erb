@@ -9,20 +9,22 @@ Sort By:<br>
 <input type="radio" name="sort" value="due-date" id="due-date">Due Date
 <ul id="all-tasks">
   <% @list.tasks.default.each do |task| %>
-    <li class="task" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
+    <li class="task" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>" data-id="<%= task.id %>"><h5 class="title"><%= task.title %></h5>
       <p>
       Start Date: <%= task.start_date.to_formatted_s(:long) %>
       <br>
       Due Date: <%= task.due_date.to_formatted_s(:long) %>
       </p>
-      <p>Mark as Complete?</p>
+      <button class="toggle-status" data-id="<%= task.id %>">Complete?</button>
+      <button class="delete-image" data-id="<%= task.id %>">Delete Image?</button>
+      <%= image_tag task.image.url %>
       <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
     </li>
   <% end %>
   <h4>Hidden Tasks:</h4>
   Completed: <input type="checkbox" value="completed" id="completed">
   Future: <input type="checkbox" value="future" id="future">
-  <h5>Completed Tasks</h5>
+  <h5 class="title">Completed Tasks</h5>
   <% @list.tasks.completed.each do |task| %>
     <li class="task complete-tasks hidden" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
       <p>
@@ -30,19 +32,23 @@ Sort By:<br>
       <br>
       Due Date: <%= task.due_date.to_formatted_s(:long) %>
       </p>
-      <p>Mark as incomplete?</p>
+      <button class="toggle-status" data-id="<%= task.id %>">Incomplete?</button>
+      <button class="delete-image" data-id="<%= task.id %>">Delete Image?</button>
+      <%= image_tag task.image.url %>
       <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
     </li>
   <% end %>
   <h5>Future Tasks</h5>
   <% @list.tasks.future.each do |task| %>
-    <li class="task future-tasks hidden" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5><%= task.title %></h5>
+    <li class="task future-tasks hidden" data-title="<%= task.title %>" data-start="<%= task.start_date.to_formatted_s(:long) %>" data-due="<%= task.due_date.to_formatted_s(:long) %>"><h5 class="title"><%= task.title %></h5>
       <p>
       Start Date: <%= task.start_date.to_formatted_s(:long) %>
       <br>
       Due Date: <%= task.due_date.to_formatted_s(:long) %>
       </p>
-      <p>Mark as complete?</p>
+      <button class="toggle-status" data-id="<%= task.id %>">Complete?</button>
+      <button class="delete-image" data-id="<%= task.id %>">Delete Image?</button>
+      <%= image_tag task.image.url %>
       <%= link_to "Edit", edit_list_task_path(@list, task.id) %>
     </li>
   <% end %>
